@@ -3,11 +3,15 @@
     <p v-if="usersLoading">
       Loading users...
     </p>
-    <table-view
-      v-if="!usersLoading"
-      :headers="headers"
-      :items="usersList"
-    />
+    <template v-if="!usersLoading">
+      <table-view
+        :headers="headers"
+        :items="usersList"
+      />
+      <cards-view
+        :items="usersList"
+      />
+    </template>
   </div>
 </template>
 
@@ -15,12 +19,14 @@
 import api from '@/api/user';
 
 import TableView from '@/components/TableView.vue';
+import CardsView from '@/components/CardsView.vue';
 
 export default {
   name: 'App',
 
   components: {
     TableView,
+    CardsView,
   },
 
   data() {
@@ -42,7 +48,7 @@ export default {
 
   async mounted() {
     try {
-      this.usersList = await api.getUsersData()
+      this.usersList = await api.getUsersData(5)
       this.usersLoading = false
     } catch (error) {
       console.log('users loading error')

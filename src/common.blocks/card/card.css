@@ -1,0 +1,40 @@
+.card {
+  border: var(--border);
+  border-radius: 3.8rem;
+  
+  &__header, 
+  &__content {
+    padding: 1.6rem;
+  }
+
+  &__header {
+    justify-self: stretch;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    border-bottom: var(--border);
+  }
+
+  &__avatar {
+    border-radius: 50%;
+  }
+
+  &__name,
+  &__location {
+    display: block;
+
+    text-align: end;
+  }
+
+  &__name {
+    font-size: 1.25em;
+    font-weight: 600;
+  }
+
+  &__content {
+    display: grid;
+    justify-items: start;
+    gap: 1rem;
+  }
+}

@@ -70,8 +70,6 @@ export default {
 
 <style lang="postcss">
   .table {
-    --border: 1px solid var(--color-gray);
-
     border-spacing: 0;
 
     &__row:not(:last-child) &__cell {
