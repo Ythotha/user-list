@@ -1,18 +1,54 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <p v-if="usersLoading">
+      Loading users...
+    </p>
+    <table-view
+      v-if="!usersLoading"
+      :headers="headers"
+      :items="usersList"
+    />
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import api from '@/api/user';
+
+import TableView from '@/components/TableView.vue';
 
 export default {
   name: 'App',
+
   components: {
-    HelloWorld
-  }
+    TableView,
+  },
+
+  data() {
+    return {
+      usersLoading: true,
+      usersList: undefined,
+      headers: [
+        'Avatar',
+        'Fullname',
+        'Date of birth',
+        'Email',
+        'Phone',
+        'Location',
+        'Nationality',
+        'Sex',
+      ]
+    }
+  },
+
+  async mounted() {
+    try {
+      this.usersList = await api.getUsersData()
+      this.usersLoading = false
+    } catch (error) {
+      console.log('users loading error')
+      console.log(error)
+    }
+  },
 }
 </script>
 
