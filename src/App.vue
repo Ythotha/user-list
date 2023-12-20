@@ -7,6 +7,19 @@
       <button @click="toggleCardsView" type="button">
         toggle users view
       </button>
+      <div class="sorting">
+        <h2>
+          Sorting
+        </h2>
+        <label>
+          Name
+          <select v-model="sortingByName" name="" id="">
+              <option value="">initial</option>
+              <option value="asc">ascending (A-Z)</option>
+              <option value="desc">descending (Z-A)</option>
+            </select>
+        </label>
+      </div>
       <div class="filters">
         <h2>
           Filters
@@ -63,6 +76,7 @@ export default {
     return {
       usersLoading: true,
       usersList: undefined,
+      sortingByName: '',
       headers: [
         'Avatar',
         'Fullname',
@@ -74,7 +88,7 @@ export default {
         'Sex',
       ],
       filters: {
-        gender: null,
+        gender: '',
         fullname: null,
         nat: null,
       }
@@ -85,11 +99,23 @@ export default {
     ...mapState({
       displayCardsView: state => state.user.displayCardsView,
     }),
+
+    sortedUsers() {
+      if (this.sortingByName === 'asc') {
+        return this.usersList.slice(0).sort((a, b) => this.getUserFullname(a).localeCompare(this.getUserFullname(b)))
+      }
+
+      if (this.sortingByName === 'desc') {
+        return this.usersList.slice(0).sort((a, b) => this.getUserFullname(b).localeCompare(this.getUserFullname(a)))
+      }
+      
+      return this.usersList
+    },
     
     filteredUsers() {
       const filterKyes = Object.keys(this.filters)
 
-      return this.usersList.filter((user) => {
+      return this.sortedUsers.filter((user) => {
         return filterKyes.every((filterKey) => {
           if (!this.filters[filterKey]?.length) {
             return true
@@ -127,6 +153,10 @@ export default {
     ...mapActions({
       toggleCardsView: 'user/toggleCardsView',
     }),
+
+    getUserFullname(user) {
+      return `${user.name.first} ${user.name.last}`
+    }
   },
 }
 </script>

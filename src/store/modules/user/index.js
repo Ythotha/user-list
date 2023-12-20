@@ -1,6 +1,6 @@
 const state = () => ({
   authorizedAs: localStorage.getItem('authorizedAs'),
-  displayCardsView: localStorage.getItem('displayCardsView')
+  displayCardsView: JSON.parse(localStorage.getItem('displayCardsView'))
 })
 
 const getters = {
