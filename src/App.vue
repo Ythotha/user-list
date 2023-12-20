@@ -7,14 +7,37 @@
       <button @click="toggleCardsView" type="button">
         toggle users view
       </button>
+      <div class="filters">
+        <h2>
+          Filters
+        </h2>
+        <div class="filters__grid">
+          <label class="filters__item">
+            Name
+            <input v-model="filters.fullname" type="text">
+          </label>
+          <label class="filters__item">
+            Nationality
+            <input v-model="filters.nat" type="text">
+          </label>
+          <label class="filters__item">
+            Sex
+            <select v-model="filters.gender" name="" id="">
+              <option value="">both</option>
+              <option value="male">male</option>
+              <option value="female">female</option>
+            </select>
+          </label>
+        </div>
+      </div>
       <table-view
         v-if="!displayCardsView"
         :headers="headers"
-        :items="usersList"
+        :items="filteredUsers"
       />
       <cards-view
         v-if="displayCardsView"
-        :items="usersList"
+        :items="filteredUsers"
       />
     </template>
   </div>
@@ -49,7 +72,12 @@ export default {
         'Location',
         'Nationality',
         'Sex',
-      ]
+      ],
+      filters: {
+        gender: null,
+        fullname: null,
+        nat: null,
+      }
     }
   },
 
@@ -57,11 +85,37 @@ export default {
     ...mapState({
       displayCardsView: state => state.user.displayCardsView,
     }),
+    
+    filteredUsers() {
+      const filterKyes = Object.keys(this.filters)
+
+      return this.usersList.filter((user) => {
+        return filterKyes.every((filterKey) => {
+          if (!this.filters[filterKey]?.length) {
+            return true
+          }
+
+          if (filterKey === 'gender' && !this.filters[filterKey]) return true
+          if (filterKey === 'gender') {
+            return user[filterKey] === this.filters[filterKey]
+          }
+
+          let userValue
+          if (filterKey === 'fullname') {
+            userValue = `${user.name.first} ${user.name.last}`
+          } else {
+            userValue = user[filterKey]
+          }
+
+          return userValue.toLowerCase().includes(this.filters[filterKey])
+        })
+      })
+    },
   },
 
   async mounted() {
     try {
-      this.usersList = await api.getUsersData(5)
+      this.usersList = await api.getUsersData(100)
       this.usersLoading = false
     } catch (error) {
       console.log('users loading error')
