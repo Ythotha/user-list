@@ -46,12 +46,30 @@
       <table-view
         v-if="!displayCardsView"
         :headers="headers"
-        :items="filteredUsers"
+        :items="paginatedData"
       />
       <cards-view
         v-if="displayCardsView"
-        :items="filteredUsers"
+        :items="paginatedData"
       />
+      
+      <div class="pagination">
+        <button @click="prevPage" type="button" :disabled="currentPage === 0">
+          Prev page
+        </button>
+        <button
+          v-for="(page, index) in totalPages"
+          :key="page"
+          @click="changePage(index)"
+          :disabled="currentPage === index"
+          type="button"
+        >
+          {{ page }}
+        </button>
+        <button @click="nextPage" type="button" :disabled="currentPage >= totalPages - 1">
+          Next page
+        </button>
+      </div>
     </template>
   </div>
 </template>
@@ -91,7 +109,9 @@ export default {
         gender: '',
         fullname: null,
         nat: null,
-      }
+      },
+      itemsPerPage: 10,
+      currentPage: 0,
     }
   },
 
@@ -137,6 +157,17 @@ export default {
         })
       })
     },
+
+    totalPages(){
+      return Math.ceil(this.filteredUsers.length / this.itemsPerPage)
+    },
+
+    paginatedData() {
+      const start = this.currentPage * this.itemsPerPage,
+            end = start + this.itemsPerPage
+
+      return this.filteredUsers.slice(start, end);
+    }
   },
 
   async mounted() {
@@ -156,6 +187,18 @@ export default {
 
     getUserFullname(user) {
       return `${user.name.first} ${user.name.last}`
+    },
+
+    prevPage(){
+      this.currentPage--;
+    },
+
+    nextPage(){
+      this.currentPage++;
+    },
+
+    changePage(index) {
+      this.currentPage = index
     }
   },
 }
