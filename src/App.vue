@@ -226,13 +226,15 @@ export default {
       const { male: malesQuantity, female: femalesQuantity, totalUsers } = this.statistics
       if (malesQuantity === femalesQuantity) return 'equal'
 
-      let majority
+      let majority, title
       if (malesQuantity > femalesQuantity) {
         majority = malesQuantity
+        title = 'males'
       } else {
         majority = femalesQuantity
+        title = 'females'
       }
-      return `males (${ majority / totalUsers * 100 }%)`
+      return `${title} (${ Math.round(majority / totalUsers * 100) }%)`
     }
   },
 
