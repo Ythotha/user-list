@@ -1,5 +1,8 @@
 <template>
   <div id="app">
+    <button @click="getNewData()" type="button">
+      get New Data
+    </button>
     <p v-if="usersLoading">
       Loading users...
     </p>
@@ -233,20 +236,25 @@ export default {
     }
   },
 
-  async mounted() {
-    try {
-      this.usersList = await api.getUsersData(100)
-      this.usersLoading = false
-    } catch (error) {
-      console.log('users loading error')
-      console.log(error)
-    }
+  mounted() {
+    this.getNewData()
   },
 
   methods: {
     ...mapActions({
       toggleCardsView: 'user/toggleCardsView',
     }),
+
+    async getNewData(quantity = 100) {
+      this.usersLoading = true
+      try {
+        this.usersList = await api.getUsersData(quantity)
+        this.usersLoading = false
+      } catch (error) {
+        console.log('users loading error')
+        console.log(error)
+      }
+    },
 
     getUserFullname(user) {
       return `${user.name.first} ${user.name.last}`
