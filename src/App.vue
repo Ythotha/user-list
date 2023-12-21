@@ -70,6 +70,43 @@
           Next page
         </button>
       </div>
+
+      <div class="statistics">
+        <h2>
+          Statistics
+        </h2>
+        <div>
+          <span>
+            Total users: {{ statistics.totalUsers }}
+          </span>
+        </div>
+        <div>
+          <span>
+            Total males: {{ statistics.male }}
+          </span>
+        </div>
+        <div>
+          <span>
+            Total females: {{ statistics.female }}
+          </span>
+        </div>
+        <div>
+          <span>
+            Majority: {{ majorityBySex }}
+          </span>
+        </div>
+        <h3>
+          Users by nationality
+        </h3>
+        <div
+          v-for="(item, key) in statistics.nat"
+          :key="key"
+        >
+          <span>
+            {{ key }}: {{ item }}
+          </span>
+        </div>
+      </div>
     </template>
   </div>
 </template>
@@ -167,6 +204,32 @@ export default {
             end = start + this.itemsPerPage
 
       return this.filteredUsers.slice(start, end);
+    },
+
+    statistics() {
+      return this.usersList.reduce((acc, currentItem) => {
+        acc[currentItem.gender]++
+
+        if (!acc.nat[currentItem.nat]) {
+          acc.nat[currentItem.nat] = 0
+        }
+        acc.nat[currentItem.nat]++
+
+        return acc
+      }, { totalUsers: this.usersList.length, male: 0, female: 0, nat: {} })
+    },
+
+    majorityBySex() {
+      const { male: malesQuantity, female: femalesQuantity, totalUsers } = this.statistics
+      if (malesQuantity === femalesQuantity) return 'equal'
+
+      let majority
+      if (malesQuantity > femalesQuantity) {
+        majority = malesQuantity
+      } else {
+        majority = femalesQuantity
+      }
+      return `males (${ majority / totalUsers * 100 }%)`
     }
   },
 
