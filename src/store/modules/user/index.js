@@ -20,8 +20,6 @@ const actions = {
 
   toggleCardsView({ state, commit }) {
     commit('toggleCardsView')
-    console.log('store displayCardsView before localstorage injection')
-    console.log(state.displayCardsView)
     localStorage.setItem('displayCardsView', state.displayCardsView)
   }
 }
