@@ -1,4 +1,5 @@
 @import "variables.css";
 @import "base.css";
 
+@import '@/common.blocks/page/page.css';
 @import '@/common.blocks/card/card.css';

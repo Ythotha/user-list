@@ -1,3 +1,5 @@
+import router from '@/router';
+
 const state = () => ({
   authorizedAs: localStorage.getItem('authorizedAs'),
   displayCardsView: JSON.parse(localStorage.getItem('displayCardsView'))
@@ -13,6 +15,7 @@ const actions = {
   signIn({ commit }, role) {
     localStorage.setItem('authorizedAs', role)
     commit('setUserRole', role)
+    router.push({ name: 'contacts' })
   },
 
   toggleCardsView({ state, commit }) {
