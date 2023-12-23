@@ -7,10 +7,12 @@
       Loading users...
     </p>
     <template v-if="!usersLoading">
-      <button @click="toggleCardsView" type="button">
-        toggle users view
-      </button>
-      <div class="sorting">
+      <div class="page__section">
+        <button @click="toggleCardsView" type="button">
+          toggle users view
+        </button>
+      </div>
+      <div class="sorting page__section">
         <h2>
           Sorting
         </h2>
@@ -23,7 +25,7 @@
             </select>
         </label>
       </div>
-      <div v-if="authorizedAs === 'admin'" class="filters">
+      <div v-if="authorizedAs === 'admin'" class="filters page__section">
         <h2>
           Filters
         </h2>
@@ -46,17 +48,19 @@
           </label>
         </div>
       </div>
-      <table-view
-        v-if="!displayCardsView"
-        :headers="headers"
-        :items="paginatedData"
-      />
-      <cards-view
-        v-if="displayCardsView"
-        :items="paginatedData"
-      />
+      <div class="page__section">
+        <table-view
+          v-if="!displayCardsView"
+          :headers="headers"
+          :items="paginatedData"
+        />
+        <cards-view
+          v-if="displayCardsView"
+          :items="paginatedData"
+        />
+      </div>
 
-      <div class="pagination">
+      <div class="pagination page__section">
         <button @click="prevPage" type="button" :disabled="currentPage === 0">
           Prev page
         </button>
@@ -74,7 +78,7 @@
         </button>
       </div>
 
-      <div class="statistics">
+      <div class="statistics page__section">
         <h2>
           Statistics
         </h2>

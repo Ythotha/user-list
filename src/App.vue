@@ -1,5 +1,5 @@
 <template>
-  <div id="app" class="app">
+  <div id="app" class="app container">
     <router-view />
   </div>
 </template>
@@ -13,6 +13,7 @@ export default {
 <style>
 .app {
   min-height: 100lvh;
+  padding-block-start: 8vmin;
 
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

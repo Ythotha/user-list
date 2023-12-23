@@ -1,5 +1,7 @@
 @import "variables.css";
 @import "base.css";
 
+@import '@/common.blocks/container/container.css';
 @import '@/common.blocks/page/page.css';
 @import '@/common.blocks/card/card.css';
+@import '@/common.blocks/pagination/pagination.css';
