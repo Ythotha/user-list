@@ -174,10 +174,10 @@ export default {
     },
 
     filteredUsers() {
-      const filterKyes = Object.keys(this.filters)
+      const filterKeys = Object.keys(this.filters)
 
       return this.sortedUsers.filter((user) => {
-        return filterKyes.every((filterKey) => {
+        return filterKeys.every((filterKey) => {
           if (!this.filters[filterKey]?.length) {
             return true
           }
