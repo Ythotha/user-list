@@ -172,6 +172,9 @@ export default {
     },
 
     filteredUsers() {
+      if (!this.sortedUsers?.length) return undefined
+
+
       const filterKeys = Object.keys(this.filters)
 
       return this.sortedUsers.filter((user) => {
@@ -202,6 +205,9 @@ export default {
     },
 
     paginatedData() {
+      if (!this.filteredUsers?.length) return undefined
+
+
       const start = this.currentPage * this.itemsPerPage,
             end = start + this.itemsPerPage
 
@@ -234,6 +240,14 @@ export default {
         title = 'females'
       }
       return `${title} (${ Math.round(majority / totalUsers * 100) }%)`
+    }
+  },
+
+  watch: {
+    paginatedData(val) {
+      if (val.length === 0) {
+        this.currentPage = 0
+      }
     }
   },
 
