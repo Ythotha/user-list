@@ -176,7 +176,7 @@ export default {
     },
 
     filteredUsers() {
-      if (!this.sortedUsers?.length) return undefined
+      if (!this.sortedUsers?.length) return []
 
 
       const filterKeys = Object.keys(this.filters)
@@ -209,7 +209,7 @@ export default {
     },
 
     paginatedData() {
-      if (!this.filteredUsers?.length) return undefined
+      if (!this.filteredUsers?.length) return []
 
 
       const start = this.currentPage * this.itemsPerPage,
