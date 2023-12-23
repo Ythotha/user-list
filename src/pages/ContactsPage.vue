@@ -55,7 +55,7 @@
         v-if="displayCardsView"
         :items="paginatedData"
       />
-      
+
       <div class="pagination">
         <button @click="prevPage" type="button" :disabled="currentPage === 0">
           Prev page
@@ -169,10 +169,10 @@ export default {
       if (this.sortingByName === 'desc') {
         return this.usersList.slice(0).sort((a, b) => this.getUserFullname(b).localeCompare(this.getUserFullname(a)))
       }
-      
+
       return this.usersList
     },
-    
+
     filteredUsers() {
       const filterKyes = Object.keys(this.filters)
 
@@ -194,7 +194,7 @@ export default {
             userValue = user[filterKey]
           }
 
-          return userValue.toLowerCase().includes(this.filters[filterKey])
+          return userValue.toLowerCase().includes(this.filters[filterKey].toLowerCase())
         })
       })
     },
