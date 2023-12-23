@@ -123,8 +123,6 @@ import TableView from '@/components/TableView.vue';
 import CardsView from '@/components/CardsView.vue';
 
 export default {
-  name: 'App',
-
   components: {
     TableView,
     CardsView,
